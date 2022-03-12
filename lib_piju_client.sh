@@ -1,8 +1,8 @@
 # do not exec me
 
 if [ -z "$PIJU_HOST" ]; then
-  echo "WARNING: Using default host 'piju'"
-  echo "To override: export PIJU_HOST=hostname"
+  echo "WARNING: Using default host 'piju'" > /dev/stderr
+  echo "To override: export PIJU_HOST=hostname" > /dev/stderr
   PIJU_HOST=piju
 fi
 
