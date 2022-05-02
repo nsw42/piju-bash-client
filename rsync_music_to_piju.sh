@@ -6,7 +6,9 @@
 #   arg: subdir to restrict rsync
 
 function usage() {
-  echo Usage: $0 [-s] [subdir]
+  echo Usage: $0 [-sf] [subdir]
+  echo "  -f  Force sync - ie don't use --ignore-existing for rsync"
+  echo "  -s  Disabled re-scan after sync"
   exit 1
 }
 
