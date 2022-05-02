@@ -1,14 +1,15 @@
 #! /bin/bash
 
 function usage() {
-  echo Usage: $0 PLAYLISTID TITLE M3U
+  echo Usage: $0 BASEMUSICDIR PLAYLISTID TITLE M3U
 }
 
 source "$(dirname $0)/lib_piju_client.sh"
 
-playlistid=$1
-title=$2
-m3u=$3
+basedir=$1
+playlistid=$2
+title=$3
+m3u=$4
 
 if [ -z "$m3u" ]; then
   usage
@@ -16,4 +17,4 @@ if [ -z "$m3u" ]; then
 fi
 
 (echo -n '{"title": "'$title'", "files": ['
- cat $m3u | grep -v '^#' | grep -v '^$' | sed 's/"//' | awk '{print join "\"" $0 "\""; join=","}'; echo ']}') | curl -X PUT "${CONTENT_TYPE[@]}" --data-binary @- "$PIJU_BASE_URL/playlists/$playlistid"
+ cat "$m3u" | tr '' '\n' | grep -v '^#' | grep -v '^$' | sed 's/"//' | sed "s:$basedir::" | awk '{print join "\"" $0 "\""; join=","}'; echo ']}') | curl -s -X PUT "${CONTENT_TYPE[@]}" --data-binary @- "$PIJU_BASE_URL/playlists/$playlistid"
