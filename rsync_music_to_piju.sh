@@ -8,7 +8,7 @@
 function usage() {
   echo Usage: $0 [-sf] [subdir]
   echo "  -f  Force sync - ie don't use --ignore-existing for rsync"
-  echo "  -s  Disabled re-scan after sync"
+  echo "  -s  Disable re-scan after sync"
   exit 1
 }
 
@@ -65,7 +65,7 @@ ROOTDIR=${ROOTDIR:1}
 
 if $scan; then
   TMPFILE=rsync.tmp
-  sed -E 's/^[0-9/]{10} [0-9:]{8} \[[0-9]*\] //' $LOGFILE | grep -v 'building file list' | grep -v 'sent [0-9,]* bytes  received [0-9,]* bytes' | grep -v 'total size is [0-9,]*  speedup' | grep -v '\.mp3$' | grep -v '\.jpg$' | sed 's/^deleting //' | sed "s_$ROOTDIR/__" | grep -v '^\.$' | sort > $TMPFILE
+  sed -E 's/^[0-9/]{10} [0-9:]{8} \[[0-9]*\] //' $LOGFILE | grep -v 'building file list' | grep -v 'sent [0-9,]* bytes  received [0-9,]* bytes' | grep -v 'total size is [0-9,]*  speedup' | grep -v '\.mp3$' | grep -v '\.jpg$' | grep -v 'created directory' | sed 's/^deleting //' | sed "s_$ROOTDIR/__" | grep -v '^\.$' | sort > $TMPFILE
 
   exec 6< $TMPFILE
   previous=
